@@ -47,8 +47,13 @@ The yield dataset originally includes many columns, but only the useful fields a
 - `Value` 
 These fields are later used to create the final merged dataset.
 
+<img width="460" height="331" alt="image" src="https://github.com/user-attachments/assets/a985c234-9699-42ec-a848-95764b2a3b26" />
+
+
 ### 3. Clean the temperature dataset
 The temperature file already contains useful information, but its column names do not match the yield dataset. To make merging easier, `year` is renamed to `Year` and `country` is renamed to `Area`. This makes the temperature data consistent with the other files. 
+<img width="1222" height="387" alt="image" src="https://github.com/user-attachments/assets/2f7104d9-5df8-48ca-ad07-7b1bb19c3a66" />
+
 
 ### 4. Clean the rainfall dataset
 The rainfall dataset contains the fields needed for the project, mainly:
@@ -57,12 +62,19 @@ The rainfall dataset contains the fields needed for the project, mainly:
 - `average rainfall mm per year` 
 The column name is adjusted during the merge so it can be used easily in the final dataframe.
 
+<img width="1237" height="337" alt="image" src="https://github.com/user-attachments/assets/59fef3bb-efaa-4c8c-a715-bd4b5d064a1f" />
+
+
 ### 5. Clean the pesticide dataset
 The pesticide file contains several columns, but only the important ones are kept for prediction. The notebook reduces it to:
 - `Area`
 - `Year`
 - `Value` 
 This keeps only the pesticide usage amount needed for modeling.
+
+
+<img width="413" height="315" alt="image" src="https://github.com/user-attachments/assets/58894168-0486-4f7f-b820-f8c56774b1ff" />
+
 
 ### 6. Merge all datasets
 After cleaning, the datasets are merged into one final dataframe using `Area` and `Year` as the common keys. The final merged dataframe includes:
@@ -76,19 +88,49 @@ After cleaning, the datasets are merged into one final dataframe using `Area` an
 
 This final table is the main dataset used for machine learning.
 
+
+<img width="837" height="643" alt="image" src="https://github.com/user-attachments/assets/98399c12-5c16-47b2-b9b4-f096e971dc40" />
+
+
 ### 7. Check the cleaned dataset
 The notebook verifies the merged dataset by checking its shape and structure. The final dataframe contains 28,248 rows and 7 columns, which confirms that the data is ready for exploration and modeling.
+
+<img width="448" height="392" alt="image" src="https://github.com/user-attachments/assets/3a83cadc-8787-4161-b3da-0bd5cedbcc9c" />
 
 ### 8. Explore the data
 Before training models, the notebook performs exploratory data analysis to better understand the structure and patterns in the dataset. This helps confirm that the merged data looks usable and that the target variable and feature columns are in the expected format.
 
+
+<img width="1046" height="602" alt="image" src="https://github.com/user-attachments/assets/7b050890-58b7-4a10-b337-b6193badb0af" />
+
+
 The next step was to begin using visualizations to understand the data better. A copy of the data was created so that a correlation matrix could be used. From the matrix, a few weak negative correlations were discovered. There was nothing discovered in the data though that would suggest a linear relationship.
+
+
+<img width="753" height="603" alt="image" src="https://github.com/user-attachments/assets/1925d308-3946-4cb4-beb0-11d949722cda" />
+
 
 From the images we have obtained, we can see that for our average yield, we have a right tail indicating that high yields are less common than average yields. The average precipitation seems to have a fairly normal skew while pesticides values tend to be on the lower end. Looking at the scatter plots, we see variability between all of our crops and yields. Average temperature shows that some crops have a wider variability such as wheat and rice whereas cassava and sweet potatoes are more clustered. This indicates that temperature ranges are variable depending on the crop but no significant linear relationship exists. Pesticide usuage shows that most of our yield comes from lower pesticide usage. Finally, with precipitation we still do not have a distinct linear relationship. It is noted that on precipitation, we have a larger cluster towarsd the bottom. This can indicate that crops have a threshold of precipitation when it comes to determining the yield.
 
+
+<img width="1110" height="666" alt="image" src="https://github.com/user-attachments/assets/c40dd956-f278-4407-9e87-875f17eafc2d" />
+
+
 To provide a more clear image, the different countries were split up into 5 groups. Each of these groups were then plotted to show the yield by average precipitation and yield by pesticide useage. The logic for this step was to see if there was a theme with precipitation and to see if pesticide use really increased the crop yield. There was not a clear relationship between a higher yield and either lower or higher precipitation. It is inferred that this has to do with countries producing the crops that fit best for that region. Again, a clear connection to higher pesticide use and higher yields was not present.
 
+
+<img width="1117" height="642" alt="image" src="https://github.com/user-attachments/assets/0bfc642f-f864-463a-91d4-0e36f01decb1" />
+
+
+<img width="1122" height="670" alt="image" src="https://github.com/user-attachments/assets/c716eb59-7a15-4df7-b270-988b31e65831" />
+
+
+
 The key insights gained in this part of the project suggests that there is not a linear relationship between the features in the data. The data all falls within a normal distribution indicating that no further transformation was needed. The outliers in the data were left in as they all fall within a normal range. The importance of the EDA helped decide the direction that was taken in the model building process.
+
+
+<img width="1240" height="615" alt="image" src="https://github.com/user-attachments/assets/17c82e9f-173f-45e1-99ce-9e2fed482682" />
+
 
 
 ### 9. Define features and target
@@ -97,11 +139,23 @@ The project separates the data into input features and the target variable:
 - Target: `Yield` 
 This is the setup used for training all the machine learning models.
 
+
+<img width="672" height="737" alt="image" src="https://github.com/user-attachments/assets/a00a8321-7d47-48c4-9f2b-f64494dc4e6c" />
+
+
 ### 10. Encode categorical variables
 Since `Item` and `Area` are categorical variables, the notebook uses one-hot encoding to convert them into a numeric format that machine learning models can understand. Numerical features are passed through directly, and some experiments also use scaling or polynomial interaction features.
 
+
+<img width="568" height="361" alt="image" src="https://github.com/user-attachments/assets/dfe509a7-23d1-46f5-b1c9-4e1917cb836a" />
+
+
 ### 11. Split the data
 The dataset is split into training and testing sets using an 80/20 split. This allows the project to train models on one portion of the data and evaluate them on unseen data afterward. 
+
+
+<img width="816" height="622" alt="image" src="https://github.com/user-attachments/assets/bdfd20a2-40d1-4b5e-862b-c11ab2a7b2a6" />
+
 
 ### 12. Train multiple models
 The notebook trains and compares several regression models, including:
@@ -119,8 +173,14 @@ Each model is evaluated using:
 - R-squared
 
 
+<img width="520" height="472" alt="image" src="https://github.com/user-attachments/assets/93f2992d-c48b-421d-88bf-c24e30a7b471" />
+
+
 ### 13. Tune and compare models
 The project also tests tuned versions of some models using hyperparameter settings. A grid search block is included in the notebook for more detailed optimization, although it is commented out because it would take significant time and resources to run. 
+
+
+<img width="1232" height="723" alt="image" src="https://github.com/user-attachments/assets/8b6f21ec-5707-4619-b072-c52a0f9a5d6c" />
 
 ### 14. Select the best model
 Based on the test-set results, Gradient Boosting performs the best overall. It has one of the highest test R-squared values and one of the lowest error values among the models compared. Random Forest is also very strong and close behind.
